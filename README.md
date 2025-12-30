@@ -29,6 +29,7 @@
 git clone https://github.com/yourusername/cloud-backup-util.git
 cd cloud-backup-util
 pip install -e .
+
 cloud-backup-util/
 ├── src/
 │   ├── providers/     # Модули облачных провайдеров
