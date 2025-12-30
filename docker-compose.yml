@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backup:
+    build: .
+    container_name: cloud-backup
+    volumes:
+      - ./backups:/app/backups
+      - ./config:/app/config
+      - ./logs:/app/logs
+      - ./data:/data:ro
+    environment:
+      - LOG_LEVEL=INFO
+    restart: "no"
+
+  # Тестовый сервис с предустановленными данными
+  backup-test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    container_name: cloud-backup-test
+    volumes:
+      - ./test-backups:/app/backups
+    environment:
+      - LOG_LEVEL=DEBUG
+    command: ["backup", "/test-data", "--output", "/app/backups/test-backup.zip"]

@@ -1,0 +1,19 @@
+# src/storage/new_storage.py
+from .base import BaseStorage
+
+class NewStorage(BaseStorage):
+    def __init__(self, config: dict):
+        super().__init__(config)
+        # Инициализация клиента
+    
+    def upload(self, file_path: str, remote_path: str) -> bool:
+        # Реализация загрузки
+    
+    def download(self, remote_path: str, local_path: str) -> bool:
+        # Реализация скачивания
+    
+    def list(self, path: str = "") -> List[Dict]:
+        # Список файлов
+    
+    def delete(self, path: str) -> bool:
+        # Удаление файла

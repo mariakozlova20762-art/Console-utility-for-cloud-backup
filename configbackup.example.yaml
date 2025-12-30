@@ -1,0 +1,69 @@
+# Пример конфигурационного файла для Cloud Backup CLI
+# Скопируйте этот файл в backup.yaml и настройте под свои нужды
+
+# Настройки резервного копирования
+backup:
+  # Имя резервной копии (будет использоваться в имени файла)
+  name: "my-backup"
+  
+  # Описание (опционально)
+  description: "Automatic backup of important files"
+  
+  # Паттерны файлов для исключения
+  exclude:
+    - "*.log"
+    - "*.tmp"
+    - "*.cache"
+    - "__pycache__/"
+    - ".git/"
+    - "node_modules/"
+    - ".venv/"
+    - "venv/"
+    - ".env"
+    - ".DS_Store"
+  
+  # Максимальный размер резервной копии (необязательно)
+  max_backup_size: "10GB"
+  
+  # Размер для разделения больших архивов (необязательно)
+  split_size: "1GB"
+
+# Настройки хранилища
+storage:
+  # Тип хранилища: yandex_disk, google_drive, s3, local
+  type: "yandex_disk"
+  
+  # Настройки для Yandex Disk
+  yandex_disk:
+    # OAuth токен (установите переменную окружения YANDEX_TOKEN)
+    token: "${YANDEX_TOKEN}"
+    
+    # Папка на Яндекс.Диске для хранения резервных копий
+    folder: "/Backups"
+    
+    # Максимальный размер файла для загрузки (по умолчанию 10GB)
+    max_upload_size: "10GB"
+  
+  # Настройки для Google Drive (альтернатива)
+  # google_drive:
+  #   # Файл с учетными данными сервисного аккаунта
+  #   credentials_file: "/app/config/google-credentials.json"
+  #   
+  #   # ID папки на Google Drive (опционально)
+  #   folder_id: "your_folder_id_here"
+  
+  # Настройки для S3-совместимого хранилища (альтернатива)
+  # s3:
+  #   # Конечная точка S3 (для Yandex Object Storage: https://storage.yandexcloud.net)
+  #   endpoint_url: "https://storage.yandexcloud.net"
+  #   
+  #   # Ключи доступа (установите переменные окружения)
+  #   access_key: "${S3_ACCESS_KEY}"
+  #   secret_key: "${S3_SECRET_KEY}"
+  #   
+  #   # Имя бакета
+  #   bucket: "my-backups"
+  #   
+  #   # Регион (для Yandex Cloud: ru-central1)
+  #   region: "ru-central1"
+  #   

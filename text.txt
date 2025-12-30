@@ -1,0 +1,22 @@
+cloud-backup-cli/
+├── src/
+│   ├── __init__.py
+│   ├── main.py              # Точка входа CLI
+│   ├── cli.py              # Парсинг аргументов
+│   ├── config.py           # Загрузка конфигурации
+│   ├── backup.py           # Основная логика резервного копирования
+│   ├── storage/            # Модули облачных хранилищ
+│   │   ├── __init__.py
+│   │   ├── base.py         # Базовый класс хранилища
+│   │   ├── yandex_disk.py  # Yandex Disk
+│   │   ├── google_drive.py # Google Drive
+│   │   └── s3_storage.py   # S3-совместимое
+│   ├── encryption.py       # Шифрование/дешифрование
+│   └── utils.py           # Вспомогательные функции
+├── tests/                  # Тесты
+├── config/                 # Примеры конфигураций
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+├── .pre-commit-config.yaml
+└── README.md

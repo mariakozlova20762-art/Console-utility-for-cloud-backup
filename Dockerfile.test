@@ -1,0 +1,23 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Копируем зависимости и устанавливаем их
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Копируем исходный код
+COPY src/ ./src/
+
+# Создаем тестовые данные
+RUN mkdir -p /test-data/subfolder && \
+    echo "Это тестовый файл 1" > /test-data/file1.txt && \
+    echo "Это тестовый файл 2" > /test-data/file2.txt && \
+    echo "Это файл в подпапке" > /test-data/subfolder/file3.txt && \
+    echo "Конфигурация теста" > /test-data/config.yaml
+
+# Создаем директории для резервных копий
+RUN mkdir -p /app/backups
+
+# Точка входа
+ENTRYPOINT ["python", "-m", "src.main"]

@@ -1,0 +1,81 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-added-large-files
+        args: ['--maxkb=1024']
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+
+  - repo: https://github.com/psf/black
+    rev: 23.11.0
+    hooks:
+      - id: black
+        language_version: python3.11
+        args: ['--line-length=100']
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: ['--profile=black', '--line-length=100']
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.6
+    hooks:
+      - id: ruff
+        args: ['--fix', '--exit-non-zero-on-fix']
+        types_or: [python, pyi]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.7.0
+    hooks:
+      - id: mypy
+        additional_dependencies: [types-requests, types-PyYAML, boto3-stubs]
+        args: ['--ignore-missing-imports', '--strict']
+        exclude: '^tests/'
+
+  - repo: https://github.com/pre-commit/mirrors-pylint
+    rev: v3.0.2
+    hooks:
+      - id: pylint
+        args: ['--rcfile=.pylintrc']
+        exclude: '^tests/'
+
+  - repo: https://github.com/python-poetry/poetry
+    rev: 1.6.1
+    hooks:
+      - id: poetry-check
+      - id: poetry-lock
+      - id: poetry-export
+        args: ['--format=requirements.txt', '--output=requirements.txt', '--without-hashes']
+
+  - repo: local
+    hooks:
+      - id: validate-dockerfile
+        name: Validate Dockerfile
+        entry: hadolint
+        language: system
+        files: Dockerfile
+        args: ['--ignore=DL3008', '--ignore=DL3013']
+
+      - id: validate-requirements
+        name: Check requirements.txt
+        entry: bash
+        language: system
+        pass_filenames: false
+        args: ['-c', 'python -m pip freeze | diff -u requirements.txt - || (echo "requirements.txt не синхронизирован" && exit 1)']
+
+      - id: test-import
+        name: Test imports
+        entry: bash
+        language: system
+        pass_filenames: false
+        args: ['-c', 'cd src && python -c "import sys; sys.path.insert(0, \".\"); import cli, config, backup, storage, encryption, utils; print(\"✓ Все

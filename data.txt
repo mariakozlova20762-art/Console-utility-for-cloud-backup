@@ -1,0 +1,13 @@
+mkdir -p data/documents data/images data/config
+
+# Создаем тестовые файлы
+echo "# Важные документы" > data/documents/notes.md
+echo "Проектная документация" > data/documents/project.txt
+echo "Изображение 1" > data/images/photo1.jpg
+echo "Изображение 2" > data/images/photo2.jpg
+echo "Конфигурация приложения" > data/config/settings.yaml
+echo "Логи приложения" > data/app.log
+echo "Временный файл" > data/temp.tmp
+
+# Создаем дерево для наглядности
+tree data/
